@@ -1,12 +1,11 @@
-import './App.css';
-
+import Home from "@/pages/public/home/Home";
+import "./App.css";
 const App = () => {
-  return (
-    <div className="content">
-      <h1>Rsbuild with React</h1>
-      <p>Start building amazing things with Rsbuild.</p>
-    </div>
-  );
+	return (
+		<div className=" overflow-hidden">
+			<Home />
+		</div>
+	);
 };
 
 export default App;
