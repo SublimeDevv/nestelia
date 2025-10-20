@@ -1,11 +1,13 @@
 import Particles from "@/components/Particles";
 import Icons from "./components/Icons";
 import ContainerHero from "./components/ContainerHero";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
 	return (
-		<main className="  bg-gradient-to-b from-black to-black  relative min-h-dvh overflow-clip pt-12 md:pt-24">
-			<div className="  size-full fixed inset-0 ">
+		<main className="bg-gradient-to-b from-black to-black relative min-h-dvh overflow-clip">
+			<Navbar />
+			<div className="size-full fixed inset-0">
 				<Particles
 					particleColors={["#ffffff"]}
 					particleCount={350}
@@ -19,7 +21,7 @@ export default function Home() {
 					cameraDistance={40}
 				/>
 			</div>
-			<div className="">
+			<div className="relative pt-24">
 				<ContainerHero />
 				<Icons />
 			</div>
