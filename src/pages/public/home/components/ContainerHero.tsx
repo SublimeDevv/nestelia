@@ -17,17 +17,17 @@ export default function ContainerHero() {
 						text="Embark on an Epic Pixel Art Adventure in the World of Nestelia"
 						delay={150}
 						animateBy="words"
-						clForSegment="bg-gradient-to-r from-purple-400 via-amber-300 to-fuchsia-500 bg-clip-text text-transparent pb-1"
+						clForSegment="bg-gradient-to-r from-purple-400 via-blue-300 to-fuchsia-500 bg-clip-text text-transparent pb-1"
 					></BlurText>
 				</motion.div>
 				<motion.div variants={itemVariants} className="mt-2">
 					<div className="flex items-center justify-center">
-						<div className=" w-fit  rounded-full  bg-gray-500/20 text-center ">
+						<div className=" w-fit  rounded-full  bg-gray-500/35 text-center ">
 							<ShinyText
 								speed={3}
 								className=" px-4 py-1  select-none"
 								bg="#efb100"
-								/* 	color="rgba(178, 133, 0, 0.65)" */
+								color="rgba(242, 242, 242, 0.62)"
 								text="Coming Soon!"
 							/>
 						</div>

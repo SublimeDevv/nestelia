@@ -7,7 +7,7 @@ export default function Home() {
 	return (
 		<main className="bg-gradient-to-b from-black to-black relative min-h-dvh overflow-clip">
 			<Navbar />
-			<div className="size-full fixed inset-0">
+			<div className="size-full fixed inset-0 z-10">
 				<Particles
 					particleColors={["#dab2ff"]}
 					particleCount={350}
@@ -18,7 +18,7 @@ export default function Home() {
 					alphaParticles={false}
 					disableRotation={true}
 					particleHoverFactor={0.4}
-					cameraDistance={40}
+					cameraDistance={30}
 				/>
 			</div>
 			<div className="relative pt-24">
