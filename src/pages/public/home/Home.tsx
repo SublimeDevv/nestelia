@@ -4,10 +4,10 @@ import ContainerHero from "./components/ContainerHero";
 
 export default function Home() {
 	return (
-		<main className="  bg-gradient-to-b from-black to-black  relative min-h-dvh overflow-clip pt-12 md:pt-24">
+		<main className="   bg-gradient-to-b from-black to-black  relative min-h-dvh overflow-clip pt-12 md:pt-24">
 			<div className="  size-full fixed inset-0 ">
 				<Particles
-					particleColors={["#ffffff"]}
+					particleColors={["#dab2ff"]}
 					particleCount={350}
 					particleSpread={18}
 					speed={0.2}
