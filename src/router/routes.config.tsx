@@ -11,6 +11,8 @@ import { PrivateRoute } from './guards/PrivateRoute';
 
 import Home from '@/pages/public/home/Home';
 import NotFound from '@/pages/public/NotFound';
+import CreatePost from '@/pages/core/blog/CreatePost';
+import Wiki from '@/pages/core/wiki/Wiki';
 
 const Login = lazy(() => import('@/pages/public/auth/Login'));
 const Register = lazy(() => import('@/pages/public/auth/Register'));
@@ -40,6 +42,14 @@ export const routesConfig: RouteObject[] = [
             index: true,
             element: <Home />,
           },
+          {
+            path: '/create-post',
+            element: <CreatePost />,
+          },
+          {
+            path: '/wiki',
+            element: <Wiki />,
+          }
         ],
       },
     ],

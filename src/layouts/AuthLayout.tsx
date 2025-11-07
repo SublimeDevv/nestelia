@@ -3,7 +3,7 @@ import Particles from '@/components/Particles';
 
 export const AuthLayout = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-black relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-b from-black to-black relative overflow-hidden">
       <div className="size-full fixed inset-0">
         <Particles
           particleColors={['#ffffff']}

@@ -4,7 +4,7 @@ import Particles from '@/components/Particles';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-black relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen bg-linear-to-b from-black to-black relative overflow-hidden flex items-center justify-center">
       <div className="size-full fixed inset-0">
         <Particles
           particleColors={['#ffffff']}
