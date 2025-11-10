@@ -10,6 +10,7 @@ import { PrivateRoute } from './guards/PrivateRoute';
 //import { RoleRoute } from './guards/RoleRoute';
 
 import Home from '@/pages/public/home/Home';
+import About from '@/pages/public/about/About';
 import NotFound from '@/pages/public/NotFound';
 import PostsList from '@/pages/core/blog/List';
 import CreatePost from '@/pages/core/blog/CreatePost';
@@ -32,7 +33,6 @@ const Login = lazy(() => import('@/pages/public/auth/Login'));
 const Register = lazy(() => import('@/pages/public/auth/Register'));
 
 const Dashboard = lazy(() => import('@/pages/core/dashboard/Dashboard'));
-const Chatbot = lazy(() => import('@/pages/core/bot/Chatbot'));
 const BotConfiguration = lazy(() => import('@/pages/core/bot/BotConfiguration'));
 
 /**
@@ -56,6 +56,10 @@ export const routesConfig: RouteObject[] = [
           {
             index: true,
             element: <Home />,
+          },
+          {
+            path: '/about',
+            element: <About />,
           },
           {
             path: '/wiki',
@@ -101,10 +105,6 @@ export const routesConfig: RouteObject[] = [
           {
             path: '/register',
             element: <Register />,
-          },
-          {
-            path: '/chatbot',
-            element: <Chatbot />,
           },
         ],
       },
@@ -208,6 +208,7 @@ export const routesConfig: RouteObject[] = [
 export const ROUTES = {
   // Públicas
   HOME: '/',
+  ABOUT: '/about',
   WIKI: '/wiki',
   WIKI_DETAIL: '/wiki/:id',
   NEWS_LIST: '/news',
@@ -221,7 +222,6 @@ export const ROUTES = {
   
   // Privadas
   DASHBOARD: '/dashboard',
-  CHATBOT: '/chatbot',
   BOT_CONFIG: '/dashboard/bot',
   NEWS: '/dashboard/news',
   NEWS_CREATE: '/dashboard/news/create',

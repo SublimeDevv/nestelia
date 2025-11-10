@@ -9,7 +9,7 @@ export interface ModalProps {
   description?: string;
   children?: ReactNode;
   footer?: ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
   showCloseButton?: boolean;
   closeOnBackdropClick?: boolean;
   closeOnEscape?: boolean;
@@ -20,6 +20,8 @@ const sizeClasses = {
   md: "max-w-md",
   lg: "max-w-lg",
   xl: "max-w-xl",
+  "2xl": "max-w-2xl",
+  "3xl": "max-w-3xl",
 };
 
 export const Modal = ({
@@ -114,7 +116,7 @@ export const Modal = ({
               </div>
             )}
 
-            {children && <div className="p-6 text-gray-300">{children}</div>}
+            {children && <div className="text-gray-300">{children}</div>}
 
             {footer && (
               <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-800 bg-gray-900/50">

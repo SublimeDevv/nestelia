@@ -10,6 +10,7 @@ export default function Navbar() {
     { name: "Wiki", path: "/wiki" },
     { name: "Noticias", path: "/news" },
     { name: "Blog", path: "/blog" },
+    { name: "Acerca de", path: "/about" },
   ];
 
   return (

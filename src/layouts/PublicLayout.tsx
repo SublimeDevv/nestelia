@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/util/ScrollToTop";
+import FloatingButtons from "@/components/FloatingButtons";
 
 export const PublicLayout = () => {
   return (
@@ -10,6 +11,7 @@ export const PublicLayout = () => {
       <Navbar />
       <Outlet />
       <Footer />
+      <FloatingButtons />
     </div>
   );
 };

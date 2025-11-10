@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, Loader } from "lucide-react";
+import { Send, Loader, X } from "lucide-react";
 import { queryChatbotStream } from "./services/chatbotService";
 import {
   querySchema,
@@ -9,7 +9,11 @@ import {
   type Message,
 } from "./schemas/chatbot.schema";
 
-export default function Chatbot() {
+interface ChatbotProps {
+  onClose?: () => void;
+}
+
+export default function Chatbot({ onClose }: ChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -106,7 +110,7 @@ export default function Chatbot() {
           ...filtered,
           {
             id: Date.now().toString(),
-            text: "Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta nuevamente.",
+            text: "Por el momento, esta funcionalidad no está disponible para el público.",
             sender: "bot",
             timestamp: new Date(),
             isStreaming: false,
@@ -127,10 +131,10 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-900">
-      <div className="w-full max-w-3xl bg-gray-800 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[85vh]">
-        {/* Header */}
-        <div className="bg-gray-900 p-6 border-b border-gray-800">
+    <div className="w-full bg-gray-800 rounded-2xl overflow-hidden flex flex-col h-[75vh]">
+      {/* Header */}
+      <div className="bg-gray-900 p-4 border-b border-gray-800">
+        <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-800 flex items-center justify-center">
               <img
@@ -144,7 +148,17 @@ export default function Chatbot() {
               <p className="text-sm text-gray-400">Soy el reemplazo de Bubo</p>
             </div>
           </div>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-gray-800"
+              aria-label="Cerrar chatbot"
+            >
+              <X size={20} />
+            </button>
+          )}
         </div>
+      </div>
 
         {/* Messages Container */}
         <div
@@ -271,7 +285,6 @@ export default function Chatbot() {
             </div>
           </form>
         </div>
-      </div>
     </div>
   );
 }

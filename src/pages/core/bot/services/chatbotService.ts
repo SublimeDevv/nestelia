@@ -27,6 +27,7 @@ async function queryChatbotStream(
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(query),
       signal: ctrl.signal,
       
