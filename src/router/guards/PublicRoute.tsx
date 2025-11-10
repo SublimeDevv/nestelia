@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/stores/authStore";
 
 interface PublicRouteProps {
   redirectTo?: string;
@@ -12,13 +12,7 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({
 }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
-        <div className="text-white text-xl">Cargando...</div>
-      </div>
-    );
-  }
+  if (restrictWhenAuthenticated && isLoading) return;
 
   if (restrictWhenAuthenticated && isAuthenticated) {
     return <Navigate to={redirectTo} replace />;

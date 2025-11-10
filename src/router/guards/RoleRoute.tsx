@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/stores/authStore";
+import { ROUTES } from "../routes.config";
 
 interface RoleRouteProps {
   allowedRoles: string[];
@@ -21,7 +22,7 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={ROUTES.LOGIN} replace />;
   }
 
   const hasRequiredRole = user && allowedRoles.includes(user.role);

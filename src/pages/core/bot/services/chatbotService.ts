@@ -1,7 +1,9 @@
 import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { httpClient } from "@/services/httpClient";
 import type { QueryModel } from "../models/queryModel";
 import type { QueryResponse, RelevantChunk } from "../schemas/chatbot.schema";
 import type { SSEChunksData, SSEDoneData, SSEErrorData, SSETokenData } from "../interfaces/SSE/data";
+import type { BotApiResponse, BotDto, HealthResponse, UploadResponse } from '../interfaces/configuration';
 
 async function queryChatbotStream(
   query: QueryModel,
@@ -141,4 +143,55 @@ async function queryChatbot(query: QueryModel) {
   return queryChatbotStream(query);
 }
 
-export { queryChatbot, queryChatbotStream };
+async function getHealth(): Promise<HealthResponse> {
+  return httpClient.get<HealthResponse>('/bot/health');
+}
+
+async function uploadPdf(file: File): Promise<UploadResponse> {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  return httpClient.post<UploadResponse>('/bot/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    timeout: 300000,
+  });
+}
+
+async function clearChromaDb(): Promise<{ message: string }> {
+  return httpClient.delete<{ message: string }>('/bot/clear-chromadb');
+}
+
+async function createApiKey(botDto: BotDto): Promise<BotApiResponse> {
+  return httpClient.post<BotApiResponse>('/bot/createApiKey', botDto);
+}
+
+async function updateApiKey(botDto: BotDto): Promise<BotApiResponse> {
+  return httpClient.put<BotApiResponse>('/bot/updateApiKey', botDto);
+}
+
+async function getModelName(): Promise<BotApiResponse> {
+  return httpClient.get<BotApiResponse>('/bot/getModelName');
+}
+
+async function createModelName(botDto: BotDto): Promise<BotApiResponse> {
+  return httpClient.post<BotApiResponse>('/bot/createModelName', botDto);
+}
+
+async function updateModelName(botDto: BotDto): Promise<BotApiResponse> {
+  return httpClient.put<BotApiResponse>('/bot/updateModelName', botDto);
+}
+
+export { 
+  queryChatbot, 
+  queryChatbotStream,
+  getHealth,
+  uploadPdf,
+  clearChromaDb,
+  createApiKey,
+  updateApiKey,
+  getModelName,
+  createModelName,
+  updateModelName
+};

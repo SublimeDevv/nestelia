@@ -34,3 +34,14 @@ export const messageSchema = z.object({
 
 export type Message = z.infer<typeof messageSchema>;
 
+export const apiKeySchema = z.object({
+  value: z.string().min(1, "El valor de la API Key es requerido"),
+});
+
+export type ApiKeyFormData = z.infer<typeof apiKeySchema>;
+
+export const modelNameSchema = z.object({
+  modelName: z.string().min(1, "El nombre del modelo es requerido"),
+});
+
+export type ModelNameFormData = z.infer<typeof modelNameSchema>;

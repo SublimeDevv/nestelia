@@ -145,7 +145,6 @@ const Particles: React.FC<ParticlesProps> = ({
 		};
 
 		if (moveParticlesOnHover) {
-			console.log("se mueve");
 			container.addEventListener("mousemove", handleMouseMove);
 		}
 

@@ -1,4 +1,4 @@
-export interface Category {
+export interface WikiCategory {
   id: number;
   name: string;
   iconUrl: string;

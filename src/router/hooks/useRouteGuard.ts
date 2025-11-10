@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/stores/authStore';
+import { ROUTES } from '../routes.config';
 
 /**
  * Hook para proteger rutas con lógica personalizada
@@ -44,7 +45,7 @@ export const useRouteGuard = (options: {
         if (onUnauthorized) {
           onUnauthorized();
         }
-        navigate('/dashboard', { replace: true });
+        navigate(ROUTES.DASHBOARD, { replace: true });
       }
     }
   }, [isAuthenticated, user, isLoading, requireAuth, requireRoles, navigate, redirectTo, location, onUnauthorized]);

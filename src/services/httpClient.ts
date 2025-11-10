@@ -24,6 +24,7 @@ export class HttpClient {
         "Content-Type": "application/json",
         ...options.headers,
       },
+      withCredentials: true,
     });
 
     this.setupInterceptors();
@@ -39,10 +40,24 @@ export class HttpClient {
 
     this.instance.interceptors.response.use(
       (response) => response,
-      (error) => {
+      async (error) => {
+        const originalRequest = error.config;
+
+        if (error.response?.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+
+          try {
+            await this.instance.post("/auth/refresh");
+
+            return this.instance(originalRequest);
+          } catch (refreshError) {
+            window.location.href = "/login";
+            return Promise.reject(refreshError);
+          }
+        }
+
         const apiError: ApiError = {
-          message:
-            error.response?.data?.message || error.message || "Network error",
+          message: error.response?.data.error?.message,
           status: error.response?.status,
           code: error.response?.data?.code || error.code,
           details: error.response?.data,
@@ -65,7 +80,7 @@ export class HttpClient {
       headers: config?.headers,
       params: config?.params,
       timeout: config?.timeout,
-      validateStatus: () => true,
+      withCredentials: true,
     };
 
     try {
@@ -73,10 +88,7 @@ export class HttpClient {
         await this.instance.request(axiosConfig);
       return response.data as T;
     } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("Unknown error occurred");
+      throw error;
     }
   }
 

@@ -1,0 +1,303 @@
+import { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ArrowLeft, Upload, Image as ImageIcon, Loader2, Newspaper } from "lucide-react";
+import Editor from "../../../components/util/Editor";
+import { createNews } from "./services/newsService";
+import { createNewsSchema, type CreateNewsFormData } from "./schemas";
+import { useToast } from "@/stores/toastStore";
+import type Quill from "quill";
+import { ROUTES } from "@/router/routes.config";
+import Tip from "@/components/Dashboard/Tip";
+
+export default function CreateNews() {
+  const navigate = useNavigate();
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const quillRef = useRef<Quill | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm<CreateNewsFormData>({
+    resolver: zodResolver(createNewsSchema),
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createNews,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["news"] });
+      toast.success("Noticia creada exitosamente");
+      navigate(ROUTES.NEWS);
+    },
+    onError: (error: Error) => {
+      toast.error(`Error al crear la noticia: ${error.message}`);
+    },
+  });
+
+  const handleImageChange = useCallback(
+    (file: File | null) => {
+      if (!file) {
+        setImagePreview(null);
+        return;
+      }
+
+      setValue("image", file, { shouldValidate: true });
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    },
+    [setValue]
+  );
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      setIsDragging(false);
+
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith("image/")) {
+        handleImageChange(file);
+      }
+    },
+    [handleImageChange]
+  );
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const onSubmit = (data: CreateNewsFormData) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("content", data.content);
+    formData.append("image", data.image);
+    createMutation.mutate(formData);
+  };
+
+  return (
+    <div className="min-h-screen pb-12">
+      <div className="mb-8">
+        <button
+          onClick={() => navigate("/dashboard/news")}
+          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
+        >
+          <ArrowLeft size={20} />
+          <span>Volver</span>
+        </button>
+        <div className="flex items-center gap-3 mb-2">
+          <Newspaper className="text-purple-400" size={32} />
+          <h1 className="text-3xl font-bold text-white">
+            Crear nueva noticia
+          </h1>
+        </div>
+        <p className="text-gray-400">
+          Completa el formulario para publicar una nueva noticia
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Título <span className="text-red-500">*</span>
+              </label>
+              <input
+                {...register("title")}
+                id="title"
+                type="text"
+                placeholder="Ingresa el título de la noticia"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              />
+              {errors.title && (
+                <p className="mt-2 text-sm text-red-400">
+                  {errors.title.message}
+                </p>
+              )}
+            </div>
+
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
+                Descripción <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                {...register("description")}
+                id="description"
+                rows={3}
+                placeholder="Ingresa una breve descripción de la noticia"
+                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all resize-none"
+              />
+              {errors.description && (
+                <p className="mt-2 text-sm text-red-400">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
+
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Contenido <span className="text-red-500">*</span>
+              </label>
+              <Controller
+                name="content"
+                control={control}
+                render={({ field }) => (
+                  <div className="bg-white rounded-lg overflow-hidden">
+                    <Editor
+                      ref={quillRef}
+                      onTextChange={() => {
+                        const html = quillRef.current?.root.innerHTML || "";
+                        field.onChange(html);
+                      }}
+                    />
+                  </div>
+                )}
+              />
+              {errors.content && (
+                <p className="mt-2 text-sm text-red-400">
+                  {errors.content.message}
+                </p>
+              )}
+              <p className="mt-2 text-xs text-gray-500">
+                Usa el editor para dar formato al contenido de tu noticia
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Imagen de portada <span className="text-red-500">*</span>
+              </label>
+
+              <Controller
+                name="image"
+                control={control}
+                render={({ field: { onChange, value, ...field } }) => (
+                  <>
+                    <input
+                      {...field}
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] || null;
+                        handleImageChange(file);
+                      }}
+                      className="hidden"
+                    />
+
+                    <div
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`
+                        relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
+                        transition-all duration-200
+                        ${
+                          isDragging
+                            ? "border-purple-500 bg-purple-500/10"
+                            : "border-gray-700 hover:border-gray-600"
+                        }
+                        ${imagePreview ? "aspect-video" : ""}
+                      `}
+                    >
+                      {imagePreview ? (
+                        <div className="relative w-full h-full">
+                          <img
+                            src={imagePreview}
+                            alt="Preview"
+                            className="w-full h-full object-contain rounded-lg"
+                          />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
+                            <div className="text-white text-sm">
+                              <Upload className="mx-auto mb-2" size={24} />
+                              <p>Cambiar imagen</p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="py-8">
+                          <ImageIcon
+                            className="mx-auto mb-4 text-gray-500"
+                            size={48}
+                          />
+                          <p className="text-gray-400 mb-2">
+                            Arrastra una imagen aquí o haz clic para seleccionar
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            JPG, JPEG o PNG (máx. 10MB)
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+              />
+
+              {errors.image && (
+                <p className="mt-2 text-sm text-red-400">
+                  {errors.image.message as string}
+                </p>
+              )}
+            </div>
+
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-6 space-y-3">
+              <button
+                type="submit"
+                disabled={createMutation.isPending}
+                className="w-full px-6 py-3 bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-semibold rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                {createMutation.isPending ? (
+                  <>
+                    <Loader2 className="animate-spin" size={18} />
+                    <span>Publicando...</span>
+                  </>
+                ) : (
+                  <span>Publicar</span>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => navigate("/dashboard/news")}
+                disabled={createMutation.isPending}
+                className="w-full px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancelar
+              </button>
+            </div>
+
+            <Tip />
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}

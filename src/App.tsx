@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRouter } from "@/router";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { useAuthStore } from "@/stores/authStore";
+import ToastContainer from "@/components/Toast";
 import "./App.css";
 
 const queryClient = new QueryClient({
@@ -13,12 +15,23 @@ const queryClient = new QueryClient({
   },
 });
 
+const AuthInitializer = ({ children }: { children: React.ReactNode }) => {
+  const checkAuth = useAuthStore((state) => state.checkAuth);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  return <>{children}</>;
+};
+
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+      <AuthInitializer>
         <AppRouter />
-      </AuthProvider>
+        <ToastContainer />
+      </AuthInitializer>
     </QueryClientProvider>
   );
 };

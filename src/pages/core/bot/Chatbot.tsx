@@ -14,7 +14,6 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const streamingMessageId = useRef<string | null>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
 
   const {
     register,
@@ -181,7 +180,7 @@ export default function Chatbot() {
             >
               {/* Avatar */}
               <div
-                className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center overflow-hidden ${
+                className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center overflow-hidden ${
                   message.sender === "user"
                     ? "bg-purple-800"
                     : "bg-gray-800 border-2 border-gray-600"

@@ -1,32 +1,32 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import logoNestelia from '@/assets/logo_nestelia.webp';
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import logoNestelia from "@/assets/logo_nestelia.webp";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { name: 'Wiki', path: '/wiki' },
-    { name: 'Noticias', path: '/#contact' },
-    { name: 'Comunidad', path: '/#contact' },
+    { name: "Wiki", path: "/wiki" },
+    { name: "Noticias", path: "/news" },
+    { name: "Blog", path: "/blog" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-gray-800">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img 
-              src={logoNestelia} 
-              alt="Nestelia" 
+            <img
+              src={logoNestelia}
+              alt="Nestelia"
               className="h-10 w-auto object-contain"
-              style={{ filter: 'hue-rotate(-15deg) saturate(1.2) brightness(1.1)' }}
+              style={{
+                filter: "hue-rotate(-15deg) saturate(1.2) brightness(1.1)",
+              }}
             />
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <a
@@ -39,7 +39,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden text-white"
@@ -48,7 +47,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 space-y-4">
             {navItems.map((item) => (
@@ -83,4 +81,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

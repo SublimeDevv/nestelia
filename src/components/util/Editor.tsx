@@ -7,18 +7,21 @@ interface EditorProps {
   defaultValue?: any;
   onTextChange?: (...args: any[]) => void;
   onSelectionChange?: (...args: any[]) => void;
+  onEditorReady?: () => void;
 }
 
 const Editor = forwardRef<Quill | null, EditorProps>(
-  ({ readOnly, defaultValue, onTextChange, onSelectionChange }, ref) => {
+  ({ readOnly, defaultValue, onTextChange, onSelectionChange, onEditorReady }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const defaultValueRef = useRef(defaultValue);
     const onTextChangeRef = useRef(onTextChange);
     const onSelectionChangeRef = useRef(onSelectionChange);
+    const onEditorReadyRef = useRef(onEditorReady);
 
     useLayoutEffect(() => {
       onTextChangeRef.current = onTextChange;
       onSelectionChangeRef.current = onSelectionChange;
+      onEditorReadyRef.current = onEditorReady;
     });
 
     useEffect(() => {
@@ -71,6 +74,8 @@ const Editor = forwardRef<Quill | null, EditorProps>(
       quill.on(Quill.events.SELECTION_CHANGE, (...args: any[]) => {
         onSelectionChangeRef.current?.(...args);
       });
+
+      onEditorReadyRef.current?.();
 
       return () => {
         if (typeof ref === 'function') {

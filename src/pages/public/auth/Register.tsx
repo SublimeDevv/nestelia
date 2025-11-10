@@ -1,30 +1,31 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/stores/authStore';
+import { useToast } from '@/stores/toastStore';
 import { Mail, Lock, User, UserPlus } from 'lucide-react';
+import { ROUTES } from '@/router/routes.config';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
   const { register } = useAuth();
+  const toast = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
 
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      toast.error('Las contraseñas no coinciden');
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+      toast.error('La contraseña debe tener al menos 6 caracteres');
       return;
     }
 
@@ -32,9 +33,10 @@ export default function Register() {
 
     try {
       await register(name, email, password);
-      navigate('/dashboard');
-    } catch (err) {
-      setError('Error al registrar. Por favor, intenta de nuevo.');
+      toast.success('Cuenta creada exitosamente');
+      navigate(ROUTES.DASHBOARD);
+    } catch (err: any) {
+      toast.error(err.message || 'Error al registrar. Por favor, intenta de nuevo.');
     } finally {
       setIsLoading(false);
     }
@@ -49,13 +51,6 @@ export default function Register() {
             <h1 className="text-3xl font-bold text-white mb-2">Crear Cuenta</h1>
             <p className="text-gray-400">Regístrate para comenzar</p>
           </div>
-
-          {/* Error Message */}
-          {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
-              <p className="text-red-400 text-sm">{error}</p>
-            </div>
-          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">

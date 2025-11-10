@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/stores/authStore";
 
 interface PrivateRouteProps {
   redirectTo?: string;
@@ -10,13 +10,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
 }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
-        <div className="text-white text-xl">Cargando...</div>
-      </div>
-    );
-  }
+  if (isLoading) return;
 
   return isAuthenticated ? <Outlet /> : <Navigate to={redirectTo} replace />;
 };

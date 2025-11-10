@@ -8,10 +8,9 @@ export interface BaseModel {
 
 export interface PaginationParams {
 	page?: number;
-	limit?: number;
-	search?: string;
-	sortBy?: string;
-	sortOrder?: "asc" | "desc";
+	size?: number;
+	param?: string;
+	category?: string;
 }
 
 export interface PaginatedResponse<T> {

@@ -1,20 +1,44 @@
 import Particles from "@/components/Particles";
 import { motion } from "motion/react";
-import { Users, Server, Gamepad2, Zap, Newspaper } from "lucide-react";
-import logoNestelia from "@/assets/logo_nestelia.webp";
+import { Newspaper, Gamepad2, Swords, Map, Sparkles } from "lucide-react";
+import Logo from "@/components/Logo";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getNews } from "@/pages/core/news/services/newsService";
+import type { News } from "@/pages/core/news/interfaces/News";
 
 export default function Home() {
-  const stats = [
-    { icon: Users, label: "Jugadores Activos", value: "1,247" },
-    { icon: Server, label: "Servidores", value: "12" },
-    { icon: Gamepad2, label: "Modos de Juego", value: "25+" },
-    { icon: Zap, label: "Uptime", value: "99.9%" },
+  const [news, setNews] = useState<News[]>([]);
+  const [isLoadingNews, setIsLoadingNews] = useState(true);
+  const navigate = useNavigate();
+
+  const gameFeatures = [
+    { icon: Map, label: "Género", value: "Metroidvania" },
+    { icon: Gamepad2, label: "Motor", value: "Unity" },
+    { icon: Swords, label: "Tipo", value: "Plataformero" },
+    { icon: Sparkles, label: "Estilo", value: "Pixel Art" },
   ];
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        setIsLoadingNews(true);
+        const response = await getNews({ page: 1, size: 3 });
+        if (response.data) {
+          setNews(response.data);
+        }
+      } catch (error) {
+        console.error("Error al cargar las noticias:", error);
+      } finally {
+        setIsLoadingNews(false);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   return (
     <main className="bg-linear-to-b from-gray-900 via-black to-gray-900 relative min-h-screen overflow-clip">
-
-      {/* Particles Background */}
       <div className="size-full fixed inset-0 z-0">
         <Particles
           particleColors={["#9333ea", "#a855f7", "#c084fc"]}
@@ -30,7 +54,6 @@ export default function Home() {
         />
       </div>
 
-      {/* Hero Section */}
       <section className="relative z-10 pt-32 pb-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <motion.div
@@ -41,19 +64,12 @@ export default function Home() {
           >
             <div className="inline-block mb-4 px-4 py-2 bg-linear-to-r from-purple-500/20 to-violet-500/20 border border-purple-500/30 rounded-full">
               <span className="text-purple-400 font-semibold text-sm tracking-wider">
-                Versión 1.0.1
+                Versión 0.5.1
               </span>
             </div>
 
             <div className="flex justify-center mb-6">
-              <img
-                src={logoNestelia}
-                alt="Nestelia"
-                className="h-32 md:h-48 lg:h-64 w-auto object-contain"
-                style={{
-                  filter: "hue-rotate(-15deg) saturate(1.2) brightness(1.1)",
-                }}
-              />
+              <Logo size="lg" />
             </div>
 
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
@@ -65,11 +81,10 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-linear-to-br from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-bold text-lg rounded-lg transition-all"
+                className="btn-primary text-lg"
               >
                 Juega ahora
               </motion.button>
-             
             </div>
 
             <div className="inline-flex items-center gap-3 bg-black/40 backdrop-blur-md border border-gray-700 rounded-lg px-5 py-2.5">
@@ -131,30 +146,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="relative z-10 py-16 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
+            {gameFeatures.map((feature, index) => (
               <motion.div
-                key={stat.label}
+                key={feature.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 text-center hover:border-purple-500/50 transition-all"
               >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-purple-400" />
-                <div className="text-3xl font-bold text-white mb-1">
-                  {stat.value}
+                <feature.icon className="w-8 h-8 mx-auto mb-3 text-purple-400" />
+                <div className="text-2xl font-bold text-white mb-1">
+                  {feature.value}
                 </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                <div className="text-sm text-gray-400">{feature.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* News/Updates Section */}
       <section className="relative z-10 py-20 px-4">
         <div className="container mx-auto max-w-7xl">
           <motion.div
@@ -165,7 +178,7 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Últimas Noticias
+              Últimas noticias
             </h2>
             <p className="text-gray-400 text-lg">
               Mantente al día con las últimas actualizaciones y eventos
@@ -173,41 +186,74 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item, index) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all cursor-pointer group"
-              >
-                <div className="h-48 bg-linear-to-br from-purple-600/20 to-violet-600/20 flex items-center justify-center">
-                  <Newspaper className="w-24 h-24 text-purple-400" />
-                </div>
-                <div className="p-6">
-                  <div className="text-purple-400 text-sm font-semibold mb-2">
-                    {new Date().toLocaleDateString("es-ES", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })}
+            {isLoadingNews ? (
+              [1, 2, 3].map((item) => (
+                <div
+                  key={item}
+                  className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden animate-pulse"
+                >
+                  <div className="h-48 bg-gray-700/50" />
+                  <div className="p-6">
+                    <div className="h-4 bg-gray-700/50 rounded mb-2 w-1/3" />
+                    <div className="h-6 bg-gray-700/50 rounded mb-2" />
+                    <div className="h-4 bg-gray-700/50 rounded w-full" />
+                    <div className="h-4 bg-gray-700/50 rounded w-2/3 mt-2" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
-                    Actualización {item}.0
-                  </h3>
-                  <p className="text-gray-400 text-sm">
-                    Nuevas características y mejoras llegan a Nestelia.
-                    ¡Descubre todo lo nuevo!
-                  </p>
                 </div>
-              </motion.div>
-            ))}
+              ))
+            ) : news.length > 0 ? (
+              news.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  onClick={() => navigate(`/news/${item.id}`)}
+                  className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden hover:border-purple-500/50 transition-all cursor-pointer group"
+                >
+                  <div className="h-48 bg-linear-to-br from-purple-600/20 to-violet-600/20 flex items-center justify-center overflow-hidden">
+                    {item.coverImageUrl ? (
+                      <img
+                        src={item.coverImageUrl}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <Newspaper className="w-24 h-24 text-purple-400" />
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <div className="text-purple-400 text-sm font-semibold mb-2">
+                      {new Date(item.publishedAt).toLocaleDateString("es-ES", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm line-clamp-3">
+                      {item.description}
+                    </p>
+                    {item.authorName && (
+                      <div className="mt-3 text-xs text-gray-500">
+                        Por {item.authorName}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <Newspaper className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-400">No hay noticias disponibles</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
-
-      
     </main>
   );
 }
