@@ -40,6 +40,11 @@ pipeline {
                     string(credentialsId: 'PATH_FRONTEND', variable: 'PATH_FRONTEND')
                 ]) {
                     script {
+                        echo 'Installing dependencies...'
+                        sh '''
+                            cd $PATH_FRONTEND
+                            npm i
+                        '''
                         echo 'Building and deploying...'
                         sh '''
                             cd $PATH_FRONTEND
