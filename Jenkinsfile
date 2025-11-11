@@ -43,12 +43,12 @@ pipeline {
                         echo 'Installing dependencies...'
                         sh '''
                             cd $PATH_FRONTEND
-                            npm i
+                            sudo npm i
                         '''
                         echo 'Building and deploying...'
                         sh '''
                             cd $PATH_FRONTEND
-                            npm run build
+                            sudo npm run build
                         '''
                     }
                 }
