@@ -73,7 +73,7 @@ export default function Wiki() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-900 via-black to-gray-900">
-      <div className="container mx-auto px-4 pt-24 pb-6">
+      <div className="container mx-auto px-3 sm:px-4 pt-20 sm:pt-24 pb-4 sm:pb-6">
         <WikiBanner
           totalEntries={pagination?.totalCount || 0}
           totalCategories={categories.length}
@@ -81,7 +81,7 @@ export default function Wiki() {
           isLoadingCategories={categoriesLoading}
         />
 
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-3 sm:gap-6">
           {/* Sidebar izquierdo - Categorías */}
           <div className="col-span-12 lg:col-span-3">
             <WikiCategoryList
@@ -108,19 +108,19 @@ export default function Wiki() {
               />
             )}
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {entriesLoading ? (
-                <div className="text-center py-20 bg-gray-800/20 backdrop-blur-sm border border-gray-700 rounded-xl">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mx-auto mb-4"></div>
-                  <p className="text-gray-400">Cargando entradas...</p>
+                <div className="text-center py-12 sm:py-20 bg-gray-800/20 backdrop-blur-sm border border-gray-700 rounded-xl">
+                  <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-purple-500 mx-auto mb-3 sm:mb-4"></div>
+                  <p className="text-sm sm:text-base text-gray-400">Cargando entradas...</p>
                 </div>
               ) : wikiEntries.length === 0 ? (
-                <div className="text-center py-20 bg-gray-800/20 backdrop-blur-sm border border-gray-700 rounded-xl">
-                  <BookOpen className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-bold text-gray-400 mb-2">
+                <div className="text-center py-12 sm:py-20 bg-gray-800/20 backdrop-blur-sm border border-gray-700 rounded-xl px-4">
+                  <BookOpen className="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-3 sm:mb-4" />
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-400 mb-2">
                     No se encontraron entradas
                   </h3>
-                  <p className="text-gray-500">
+                  <p className="text-sm sm:text-base text-gray-500">
                     Intenta con otra búsqueda o categoría
                   </p>
                 </div>

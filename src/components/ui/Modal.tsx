@@ -89,11 +89,11 @@ export const Modal = ({
               relative w-full ${sizeClasses[size]}
               bg-gray-900 border border-gray-800
               rounded-xl shadow-2xl
-              overflow-hidden
+              overflow-hidden p-4
             `}
           >
             {(title || showCloseButton) && (
-              <div className="flex items-start justify-between p-6 border-b border-gray-800">
+              <div className="flex items-start justify-between p-6 border-b border-gray-800 mb-4">
                 <div className="flex-1">
                   {title && (
                     <h2 className="text-xl font-semibold text-white mb-1">
@@ -119,7 +119,7 @@ export const Modal = ({
             {children && <div className="text-gray-300">{children}</div>}
 
             {footer && (
-              <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-800 bg-gray-900/50">
+              <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-800 bg-gray-900/50 mt-4">
                 {footer}
               </div>
             )}

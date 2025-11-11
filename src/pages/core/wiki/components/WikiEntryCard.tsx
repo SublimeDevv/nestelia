@@ -28,8 +28,8 @@ export default function WikiEntryCard({
       onClick={() => onClick(entry.id)}
       className="group cursor-pointer bg-gray-800/40 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20 transition-all"
     >
-      <div className="flex">
-        <div className="relative w-40 h-full shrink-0 overflow-hidden rounded-l-xl bg-gray-900/50 p-[30px] flex items-center justify-center">
+      <div className="flex flex-col sm:flex-row">
+        <div className="relative w-full sm:w-32 md:w-40 h-40 sm:h-full shrink-0 overflow-hidden bg-gray-900/50 p-4 sm:p-6 md:p-[30px] flex items-center justify-center">
           <img
             src={entry.image}
             alt={entry.title}
@@ -37,17 +37,18 @@ export default function WikiEntryCard({
           />
         </div>
 
-        <div className="flex-1 p-4 min-w-0">
-          <h3 className="text-lg font-bold text-purple-400 group-hover:text-purple-300 transition-colors mb-2">
+        {/* Contenido */}
+        <div className="flex-1 p-3 sm:p-4 min-w-0">
+          <h3 className="text-base sm:text-lg font-bold text-purple-400 group-hover:text-purple-300 transition-colors mb-1.5 sm:mb-2 line-clamp-2">
             {entry.title}
           </h3>
           <div
-            className="text-gray-400 text-sm mb-3 line-clamp-2 prose prose-invert prose-sm max-w-none"
+            className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 prose prose-invert prose-sm max-w-none"
             dangerouslySetInnerHTML={{
               __html: entry.description,
             }}
           />
-          <div className="flex items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-2 sm:gap-4 text-xs text-gray-500 flex-wrap">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {new Date(entry.createdAt).toLocaleDateString(

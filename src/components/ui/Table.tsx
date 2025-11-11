@@ -36,19 +36,19 @@ export default function Table<T>({
     return (
       <div className="bg-gray-900/40 border border-gray-800/60 rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[640px]">
             <thead className="bg-gray-800/50">
               <tr>
                 {columns.map((column) => (
                   <th
                     key={column.key}
-                    className="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
+                    className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
                   >
                     {column.label}
                   </th>
                 ))}
                 {hasActions && (
-                  <th className="px-6 py-4 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
                     Acciones
                   </th>
                 )}
@@ -58,15 +58,15 @@ export default function Table<T>({
               {[...Array(5)].map((_, index) => (
                 <tr key={index} className="animate-pulse">
                   {columns.map((column) => (
-                    <td key={column.key} className="px-6 py-4">
+                    <td key={column.key} className="px-3 sm:px-6 py-3 sm:py-4">
                       <div className="h-5 bg-gray-800/50 rounded w-3/4" />
                     </td>
                   ))}
                   {hasActions && (
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <div className="flex justify-end gap-2">
-                        <div className="h-8 w-16 bg-gray-800/50 rounded" />
-                        <div className="h-8 w-16 bg-gray-800/50 rounded" />
+                        <div className="h-8 w-14 sm:w-16 bg-gray-800/50 rounded" />
+                        <div className="h-8 w-14 sm:w-16 bg-gray-800/50 rounded" />
                       </div>
                     </td>
                   )}
@@ -90,20 +90,20 @@ export default function Table<T>({
   return (
     <div className="bg-gray-900/40 border border-gray-800/60 rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full min-w-[640px]">
           <thead className="bg-gray-800/50">
             <tr>
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className={`px-6 py-4 text-${column.align || "left"} text-xs font-medium text-gray-400 uppercase tracking-wider`}
+                  className={`px-3 sm:px-6 py-3 sm:py-4 text-${column.align || "left"} text-xs font-medium text-gray-400 uppercase tracking-wider`}
                   style={column.width ? { width: column.width } : undefined}
                 >
                   {column.label}
                 </th>
               ))}
               {hasActions && (
-                <th className="px-6 py-4 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-3 sm:py-4 text-right text-xs font-medium text-gray-400 uppercase tracking-wider whitespace-nowrap">
                   Acciones
                 </th>
               )}
@@ -120,7 +120,7 @@ export default function Table<T>({
                   {columns.map((column) => (
                     <td
                       key={column.key}
-                      className={`px-6 py-4 text-sm text-gray-300 text-${column.align || "left"}`}
+                      className={`px-3 sm:px-6 py-3 sm:py-4 text-sm text-gray-300 text-${column.align || "left"}`}
                     >
                       {column.render
                         ? column.render(item)
@@ -128,26 +128,26 @@ export default function Table<T>({
                     </td>
                   ))}
                   {hasActions && (
-                    <td className="px-6 py-4">
-                      <div className="flex justify-end gap-2">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
+                      <div className="flex justify-end gap-1.5 sm:gap-2">
                         {onEdit && (
                           <button
                             onClick={() => onEdit(item)}
-                            className="px-3 py-1.5 bg-blue-600/90 text-white text-sm font-medium rounded hover:bg-blue-600 flex items-center gap-1.5 transition-colors"
+                            className="px-2 sm:px-3 py-1.5 bg-blue-600/90 text-white text-xs sm:text-sm font-medium rounded hover:bg-blue-600 flex items-center gap-1 sm:gap-1.5 transition-colors whitespace-nowrap"
                             title="Editar"
                           >
                             <Edit size={14} />
-                            <span>Editar</span>
+                            <span className="hidden sm:inline">Editar</span>
                           </button>
                         )}
                         {onDelete && (
                           <button
                             onClick={() => onDelete(item)}
-                            className="px-3 py-1.5 bg-red-600/90 text-white text-sm font-medium rounded hover:bg-red-600 flex items-center gap-1.5 transition-colors"
+                            className="px-2 sm:px-3 py-1.5 bg-red-600/90 text-white text-xs sm:text-sm font-medium rounded hover:bg-red-600 flex items-center gap-1 sm:gap-1.5 transition-colors whitespace-nowrap"
                             title="Eliminar"
                           >
                             <Trash2 size={14} />
-                            <span>Eliminar</span>
+                            <span className="hidden sm:inline">Eliminar</span>
                           </button>
                         )}
                       </div>

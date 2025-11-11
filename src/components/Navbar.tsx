@@ -61,20 +61,14 @@ export default function Navbar() {
               </a>
             ))}
             <div className="pt-4 border-t border-gray-800 space-y-2">
-              <Link
+              {/* <Link
                 to="/login"
                 className="block text-gray-300 hover:text-white transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Iniciar Sesión
               </Link>
-              <Link
-                to="/register"
-                className="block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Registrarse
-              </Link>
+              */}
             </div>
           </div>
         )}

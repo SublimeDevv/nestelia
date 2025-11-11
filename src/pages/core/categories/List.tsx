@@ -196,24 +196,24 @@ export default function CategoriesList() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <FolderOpen className="text-purple-400" size={32} />
-            <h1 className="text-3xl font-bold text-white">
+    <div className="space-y-4 sm:space-y-6 px-3 sm:px-0">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div className="w-full sm:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <FolderOpen className="text-purple-400 w-6 h-6 sm:w-8 sm:h-8" />
+            <h1 className="text-xl sm:text-3xl font-bold text-white">
               Categorías
             </h1>
           </div>
-          <p className="text-gray-400">
+          <p className="text-sm sm:text-base text-gray-400">
             Gestiona y visualiza todas las categorías del sistema
           </p>
         </div>
         <button
           onClick={handleCreateNew}
-          className="px-6 py-3 bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-semibold rounded-lg flex items-center gap-2 transition-all"
+          className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all text-sm sm:text-base"
         >
-          <Plus size={18} />
+          <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
           <span>Crear categoría</span>
         </button>
       </div>

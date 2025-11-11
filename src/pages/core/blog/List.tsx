@@ -95,24 +95,24 @@ export default function PostsList() {
   }));
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-start">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <FileText className="text-purple-400" size={32} />
-            <h1 className="text-3xl font-bold text-white">
+    <div className="space-y-4 sm:space-y-6 px-3 sm:px-0">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+        <div className="w-full sm:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <FileText className="text-purple-400 w-6 h-6 sm:w-8 sm:h-8" />
+            <h1 className="text-xl sm:text-3xl font-bold text-white">
               Publicaciones
             </h1>
           </div>
-          <p className="text-gray-400">
+          <p className="text-sm sm:text-base text-gray-400">
             Gestiona y visualiza todas las publicaciones publicadas
           </p>
         </div>
         <button 
           onClick={() => navigate(ROUTES.POSTS_CREATE)}
-          className="px-6 py-3 bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-semibold rounded-lg flex items-center gap-2 transition-all"
+          className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-all text-sm sm:text-base"
         >
-          <Plus size={18} />
+          <Plus size={16} className="sm:w-[18px] sm:h-[18px]" />
           <span>Crear publicación</span>
         </button>
       </div>
@@ -162,15 +162,15 @@ export default function PostsList() {
       </div>
 
       {data?.pagination && data.pagination.totalPages > 1 && (
-        <div className="flex justify-center items-center gap-4 mt-6">
+        <div className="flex justify-center items-center gap-2 sm:gap-4 mt-6">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 sm:px-4 py-2 bg-gray-800 text-white text-sm sm:text-base rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Anterior
           </button>
-          <span className="text-gray-400">
+          <span className="text-gray-400 text-sm sm:text-base">
             Página {page} de {data.pagination.totalPages}
           </span>
           <button
@@ -178,7 +178,7 @@ export default function PostsList() {
               setPage((p) => Math.min(data?.pagination?.totalPages || 0, p + 1))
             }
             disabled={page >= data.pagination.totalPages}
-            className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 sm:px-4 py-2 bg-gray-800 text-white text-sm sm:text-base rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Siguiente
           </button>

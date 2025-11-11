@@ -164,7 +164,7 @@ export default function About() {
           <div className="flex justify-center mb-6">
             <Logo size="lg" />
           </div>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto px-4">
             Un proyecto desarrollado con tecnologías modernas y un equipo
             apasionado
           </p>
@@ -176,21 +176,21 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-20"
         >
-          <div className="flex items-center justify-center gap-3 mb-10">
-            <Users className="w-8 h-8 text-purple-400" />
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <div className="flex items-center justify-center gap-3 mb-10 px-4">
+            <Users className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
               Equipo de Desarrollo
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
             {teamMembers.map((member, index) => (
               <motion.div
                 key={member.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 text-center hover:border-purple-500/50 transition-all group"
+                className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-4 sm:p-6 text-center hover:border-purple-500/50 transition-all group"
                 title={member.description}
               >
                 <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-2 border-purple-500/30 group-hover:border-purple-500 group-hover:scale-110 transition-all">
@@ -198,6 +198,9 @@ export default function About() {
                     src={member.avatar}
                     alt={member.name}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    width="96"
+                    height="96"
                   />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">
@@ -219,33 +222,33 @@ export default function About() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <div className="text-center mb-10 px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
               Stack Tecnológico
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {technologies.map((tech, index) => (
               <motion.div
                 key={tech.category}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-8 hover:border-purple-500/50 transition-all"
+                className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-xl p-4 sm:p-6 md:p-8 hover:border-purple-500/50 transition-all"
               >
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-6 text-center">
                   {tech.category}
                 </h3>
 
                 <div
                   className={`grid ${
                     tech.category === "Frontend"
-                      ? "grid-cols-2 md:grid-cols-4"
+                      ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-4"
                       : tech.items.length === 1
                       ? "grid-cols-1 place-items-center"
-                      : "grid-cols-2 md:grid-cols-3"
-                  } gap-6`}
+                      : "grid-cols-2 sm:grid-cols-2 md:grid-cols-3"
+                  } gap-4 sm:gap-6`}
                 >
                   {tech.items.map((item) => (
                     <div
@@ -253,18 +256,21 @@ export default function About() {
                       className="flex flex-col items-center group relative"
                       title={item.description}
                     >
-                      <div className="w-20 h-20 mb-3 flex items-center justify-center bg-white/5 rounded-lg p-3 group-hover:bg-white/10 transition-all group-hover:scale-110 cursor-pointer">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 mb-3 flex items-center justify-center bg-white/5 rounded-lg p-2 sm:p-3 group-hover:bg-white/10 transition-all group-hover:scale-110 cursor-pointer">
                         <img
                           src={item.logo}
                           alt={item.name}
                           className="w-full h-full object-contain"
+                          loading="lazy"
+                          width="80"
+                          height="80"
                         />
                       </div>
-                      <p className="text-sm text-gray-300 text-center font-medium">
+                      <p className="text-xs sm:text-sm text-gray-300 text-center font-medium break-words px-1">
                         {item.name}
                       </p>
 
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-4 py-3 bg-gray-900 border border-purple-500/50 rounded-lg text-sm text-gray-200 whitespace-normal min-w-[250px] max-w-[300px] text-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl">
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 border border-purple-500/50 rounded-lg text-xs sm:text-sm text-gray-200 whitespace-normal w-48 sm:w-56 text-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-xl invisible group-hover:visible">
                         {item.description}
                         <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-purple-500/50" />
                       </div>
@@ -282,19 +288,22 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-16"
         >
-          <div className="bg-linear-to-br from-red-900/20 to-orange-900/20 backdrop-blur-sm border border-red-500/30 rounded-xl p-8 flex items-center justify-center gap-6">
-            <div className="w-20 h-20 flex items-center justify-center bg-white/10 rounded-lg p-3">
+          <div className="bg-linear-to-br from-red-900/20 to-orange-900/20 backdrop-blur-sm border border-red-500/30 rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-white/10 rounded-lg p-3 flex-shrink-0">
               <img
                 src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg"
                 alt="Oracle Cloud"
                 className="w-full h-full object-contain"
+                loading="lazy"
+                width="80"
+                height="80"
               />
             </div>
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2">
+            <div className="text-center sm:text-left">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                 Alojado en Oracle Cloud
               </h3>
-              <p className="text-gray-300">
+              <p className="text-sm sm:text-base text-gray-300">
                 Todo el sistema está desplegado en un VPS de Oracle Cloud
                 Infrastructure
               </p>

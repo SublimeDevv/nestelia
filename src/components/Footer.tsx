@@ -25,12 +25,12 @@ export default function Footer() {
             <div className="flex items-center gap-2 text-gray-400 text-sm">
               <MapPin className="w-4 h-4 text-purple-400" />
               <span className="flex items-center gap-1">
-                Hecho con <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> por Niux Team
+                Hecho con alma por Niux Team
               </span>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Links */}
           <div className="space-y-4">
             <h4 className="text-white font-semibold text-lg">
               Enlaces Rápidos
