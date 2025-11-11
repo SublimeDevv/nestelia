@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRouter } from "@/router";
 import { useAuthStore } from "@/stores/authStore";
 import ToastContainer from "@/components/Toast";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import "./App.css";
 
 const queryClient = new QueryClient({
@@ -29,6 +30,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthInitializer>
+        <OfflineIndicator />
         <AppRouter />
         <ToastContainer />
       </AuthInitializer>

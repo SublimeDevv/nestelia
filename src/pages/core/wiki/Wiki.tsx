@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { getCategories } from "@/pages/core/categories/services/categoryService";
 import { getWikiEntries } from "./services/wikiService";
+import { useWikiPrecache } from "@/hooks/useWikiPrecache";
 import {
   WikiBanner,
   WikiSearchBar,
@@ -52,6 +53,8 @@ export default function Wiki() {
   const categories = categoriesData?.data || [];
   const wikiEntries = wikiEntriesData?.data || [];
   const pagination = wikiEntriesData?.pagination;
+
+  useWikiPrecache(wikiEntries);
 
   const handleEntryClick = (entryId: string) => {
     navigate(`/wiki/${entryId}`);

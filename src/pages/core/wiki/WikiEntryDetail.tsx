@@ -11,6 +11,7 @@ import {
 import { getWikiEntryById } from "./services/wikiService";
 import { useToast } from "@/stores/toastStore";
 import { ROUTES } from "@/router/routes.config";
+import { useWikiEntryPrecache } from "@/hooks/useWikiPrecache";
 import RelatedEntriesCarousel from "./components/RelatedEntriesCarousel";
 
 export default function WikiEntryDetail() {
@@ -23,6 +24,8 @@ export default function WikiEntryDetail() {
     queryFn: () => getWikiEntryById(id!),
     enabled: !!id,
   });
+
+  useWikiEntryPrecache(id);
 
   if (isLoading) {
     return (
