@@ -34,4 +34,14 @@ export default defineConfig({
 			{ from: "public", to: "" }
 		],
 	},
+	dev: {
+		watchFiles: {
+			paths: ['src/**/*'],
+			options: {
+				ignored: ['**/node_modules/**', '**/dist/**', '**/.git/**', '**/*.log']
+			}
+		},
+		hmr: true,
+		liveReload: true,
+	},
 });

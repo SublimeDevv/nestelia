@@ -58,6 +58,7 @@ export default function EditPost() {
     mutationFn: (formData: FormData) => updatePost(id!, formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts", id] });
       toast.success("Publicación actualizada exitosamente");
       navigate(ROUTES.POSTS);
     },

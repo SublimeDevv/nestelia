@@ -64,6 +64,7 @@ export default function EditWikiEntry() {
     mutationFn: (formData: FormData) => updateWikiEntry(id!, formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["wikiEntries"] });
+      queryClient.invalidateQueries({ queryKey: ["wikiEntry", id] });
       toast.success("Entrada de wiki actualizada exitosamente");
       navigate(`/dashboard/wiki-entries/${categoryId}`);
     },

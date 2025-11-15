@@ -14,14 +14,16 @@ if (rootEl) {
   );
 }
 
-serviceWorkerRegistration.register({
-  onSuccess: () => {
-    console.log('Aplicación disponible');
-  },
-  onUpdate: (registration) => {
-    if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
-      registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
-      window.location.reload();
-    }
-  },
-});
+if (process.env.NODE_ENV === 'production') {
+  serviceWorkerRegistration.register({
+    onSuccess: () => {
+      console.log('Aplicación disponible');
+    },
+    onUpdate: (registration) => {
+      if (confirm('Nueva versión disponible. ¿Actualizar ahora?')) {
+        registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+        window.location.reload();
+      }
+    },
+  });
+}

@@ -46,8 +46,9 @@ export default function WikiEntriesList() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteWikiEntry(id),
-    onSuccess: () => {
+    onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["wikiEntries"] });
+      queryClient.invalidateQueries({ queryKey: ["wikiEntry", deletedId] });
       toast.success("Entrada de wiki eliminada exitosamente");
       setDeleteModalOpen(false);
       setItemToDelete(null);

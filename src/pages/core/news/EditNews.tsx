@@ -58,6 +58,7 @@ export default function EditNews() {
     mutationFn: (formData: FormData) => updateNews(id!, formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["news"] });
+      queryClient.invalidateQueries({ queryKey: ["news", id] });
       toast.success("Noticia actualizada exitosamente");
       navigate("/dashboard/news");
     },

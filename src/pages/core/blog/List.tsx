@@ -33,8 +33,9 @@ export default function PostsList() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deletePost(id),
-    onSuccess: () => {
+    onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts", deletedId] });
       toast.success("Publicación eliminada exitosamente");
       setDeleteModalOpen(false);
       setItemToDelete(null);

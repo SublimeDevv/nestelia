@@ -33,8 +33,9 @@ export default function NewsList() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteNews(id),
-    onSuccess: () => {
+    onSuccess: (_, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["news"] });
+      queryClient.invalidateQueries({ queryKey: ["news", deletedId] });
       toast.success("Noticia eliminada exitosamente");
       setDeleteModalOpen(false);
       setItemToDelete(null);
