@@ -179,7 +179,7 @@ export default function About() {
           <div className="flex items-center justify-center gap-3 mb-10 px-4">
             <Users className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-              Equipo de Desarrollo
+              Nuestro Equipo
             </h2>
           </div>
 
@@ -224,7 +224,7 @@ export default function About() {
         >
           <div className="text-center mb-10 px-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-              Stack Tecnológico
+              Herramientas
             </h2>
           </div>
 
