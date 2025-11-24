@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, Loader, X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { queryChatbotStream } from "./services/chatbotService";
 import {
   querySchema,
@@ -229,12 +230,24 @@ export default function Chatbot({ onClose }: ChatbotProps) {
                   }`}
                 >
                   {message.text ? (
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {message.text}
+                    <div className="text-sm leading-relaxed whitespace-pre-wrap prose prose-invert prose-sm max-w-none">
+                      <ReactMarkdown
+                        components={{
+                          p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                          strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                          em: ({ children }) => <em className="italic">{children}</em>,
+                          ul: ({ children }) => <ul className="list-disc list-inside mb-2">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal list-inside mb-2">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1">{children}</li>,
+                          code: ({ children }) => <code className="bg-gray-900 px-1.5 py-0.5 rounded text-purple-300">{children}</code>,
+                        }}
+                      >
+                        {message.text}
+                      </ReactMarkdown>
                       {message.isStreaming && (
                         <span className="inline-block w-2 h-4 ml-1 bg-gray-300 animate-pulse" />
                       )}
-                    </p>
+                    </div>
                   ) : (
                     <Loader className="animate-spin text-gray-300" size={20} />
                   )}
