@@ -109,63 +109,19 @@ export default function Home() {
 
             <div className="flex flex-col gap-4 justify-center items-center mb-12">
               <div className="text-center">
-                <h3 className="text-xl md:text-2xl font-semibold text-purple-400 mb-4">
-                  Disponible en:
-                </h3>
-                <div className="flex gap-4 justify-center">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    className="bg-linear-to-br from-purple-600/30 to-violet-600/30 backdrop-blur-sm border border-purple-500/50 rounded-xl p-4 min-w-[70px]"
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-white">
-                      {timeLeft.days}
-                    </div>
-                    <div className="text-xs md:text-sm text-gray-300 mt-1">
-                      {timeLeft.days === 1 ? "Día" : "Días"}
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="bg-linear-to-br from-purple-600/30 to-violet-600/30 backdrop-blur-sm border border-purple-500/50 rounded-xl p-4 min-w-[70px]"
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-white">
-                      {timeLeft.hours}
-                    </div>
-                    <div className="text-xs md:text-sm text-gray-300 mt-1">
-                      {timeLeft.hours === 1 ? "Hora" : "Horas"}
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="bg-linear-to-br from-purple-600/30 to-violet-600/30 backdrop-blur-sm border border-purple-500/50 rounded-xl p-4 min-w-[70px]"
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-white">
-                      {timeLeft.minutes}
-                    </div>
-                    <div className="text-xs md:text-sm text-gray-300 mt-1">
-                      {timeLeft.minutes === 1 ? "Minuto" : "Minutos"}
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="bg-linear-to-br from-purple-600/30 to-violet-600/30 backdrop-blur-sm border border-purple-500/50 rounded-xl p-4 min-w-[70px]"
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-white">
-                      {timeLeft.seconds}
-                    </div>
-                    <div className="text-xs md:text-sm text-gray-300 mt-1">
-                      {timeLeft.seconds === 1 ? "Segundo" : "Segundos"}
-                    </div>
-                  </motion.div>
-                </div>
+                <motion.a
+                  href="https://alonsoroano.itch.io/nestelia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-purple-500/50 transition-all"
+                >
+                  Descargar
+                </motion.a>
               </div>
             </div>
 
