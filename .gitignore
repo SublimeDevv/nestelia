@@ -5,6 +5,8 @@
 
 # Dist
 node_modules
+.package-lock.json
+.npmrc
 dist/
 
 # Profile
